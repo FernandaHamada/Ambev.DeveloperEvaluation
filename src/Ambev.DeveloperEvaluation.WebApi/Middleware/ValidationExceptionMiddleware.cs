@@ -84,10 +84,11 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status404NotFound;
 
-            var response = new ApiResponse
+            var response = new ErrorResponse
             {
-                Success = false,
-                Message = exception.Message
+                Type = "ResourceNotFound",
+                Error = "Resource not found",
+                Detail = exception.Message
             };
 
             var jsonOptions = new JsonSerializerOptions
