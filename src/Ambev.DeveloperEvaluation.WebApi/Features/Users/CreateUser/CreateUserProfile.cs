@@ -13,7 +13,13 @@ public class CreateUserProfile : Profile
     /// </summary>
     public CreateUserProfile()
     {
+        CreateMap<NameRequest, NameCommand>();
+        CreateMap<AddressRequest, AddressCommand>();
+        CreateMap<GeolocationRequest, GeolocationCommand>();
         CreateMap<CreateUserRequest, CreateUserCommand>();
         CreateMap<CreateUserResult, CreateUserResponse>();
+        CreateMap<NameResult, NameResponse>();
+        CreateMap<AddressResult, AddressResponse>();
+        CreateMap<GeolocationResult, GeolocationResponse>();
     }
 }

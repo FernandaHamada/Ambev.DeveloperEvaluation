@@ -30,6 +30,17 @@ public class CreateUserCommand : IRequest<CreateUserResult>
     /// </summary>
     public string Password { get; set; } = string.Empty;
 
+
+    /// <summary>
+    /// Gets or sets the name for the user.
+    /// </summary>
+    public NameCommand Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the address for the user.
+    /// </summary>
+    public AddressCommand Address { get; set; }
+
     /// <summary>
     /// Gets or sets the phone number for the user.
     /// </summary>
@@ -61,4 +72,59 @@ public class CreateUserCommand : IRequest<CreateUserResult>
             Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
         };
     }
+}
+
+public class NameCommand
+{
+    /// <summary>
+    /// Gets or sets the first name for the user.
+    /// </summary>
+    public string FirstName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the last name for the user.
+    /// </summary>
+    public string LastName { get; set; } = string.Empty;
+}
+
+public class AddressCommand
+{
+    /// <summary>
+    /// Gets or sets the city for the user.
+    /// </summary>
+    public string City { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the street for the user.
+    /// </summary>
+    public string Street { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the number for the user.
+    /// </summary>
+    public int Number { get; set; }
+
+    /// <summary>
+    /// Gets or sets the zip code for the user.
+    /// </summary>
+    public string ZipCode { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the geolocation for the user.
+    /// </summary>
+    public GeolocationCommand Geolocation { get; set; }
+
+}
+
+public class GeolocationCommand
+{
+    /// <summary>
+    /// Gets or sets the latitude for the user.
+    /// </summary>
+    public string Lat { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the longitude for the user.
+    /// </summary>
+    public string Long { get; set; } = string.Empty;
 }
