@@ -72,4 +72,23 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
+
+    public async Task<User> UpdateAsync(User user, CancellationToken cancellationToken = default)
+    {
+        var exists = await _context.Users
+                            .AsNoTracking()
+                            .AnyAsync(u => u.Id == user.Id, cancellationToken);
+
+        if (!exists)
+            return null;
+
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync(cancellationToken);
+        return user;
+    }
+
+    public async Task<IQueryable<User>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return _context.Users.AsNoTracking();
+    }
 }
