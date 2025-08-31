@@ -86,4 +86,9 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync(cancellationToken);
         return user;
     }
+
+    public async Task<IQueryable<User>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return _context.Users.AsNoTracking();
+    }
 }

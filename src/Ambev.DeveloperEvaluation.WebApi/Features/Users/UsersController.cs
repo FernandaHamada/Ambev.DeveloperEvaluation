@@ -11,6 +11,8 @@ using Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.Response;
 using Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
 using Ambev.DeveloperEvaluation.Application.Users.UpdateUser;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.ListUsers;
+using Ambev.DeveloperEvaluation.Application.Users.ListUsers;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
 
@@ -120,6 +122,23 @@ public class UsersController : BaseController
             Success = true,
             Message = "User updated successfully",
             Data = _mapper.Map<UserResponse>(response)
+        });
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ApiResponseWithData<PaginatedResponse<UserResponse>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ListUsers([FromQuery] ListUsersRequest request, CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<ListUserCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<PaginatedResponse<UserResponse>>
+        {
+            Success = true,
+            Message = "List users successfully",
+            Data = _mapper.Map<PaginatedResponse<UserResponse>>(response)
         });
     }
 }

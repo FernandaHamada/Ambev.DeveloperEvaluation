@@ -40,4 +40,6 @@ public interface IUserRepository
     Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
 
     Task<User> UpdateAsync(User user, CancellationToken cancellationToken = default);
+
+    Task<IQueryable<User>> GetAllAsync(CancellationToken cancellationToken = default);
 }
