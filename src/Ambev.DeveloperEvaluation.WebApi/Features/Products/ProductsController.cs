@@ -1,5 +1,7 @@
-﻿using Ambev.DeveloperEvaluation.Application.Products.ListProducts;
+﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Products.ListProducts;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.Response;
 using AutoMapper;
@@ -38,6 +40,22 @@ public class ProductsController : BaseController
             Success = true,
             Message = "List products successfully",
             Data = _mapper.Map<PaginatedResponse<ProductResponse>>(response)
+        });
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(ApiResponseWithData<ProductResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<CreateProductCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<ProductResponse>
+        {
+            Success = true,
+            Message = "Product created successfully",
+            Data = _mapper.Map<ProductResponse>(response)
         });
     }
 }
