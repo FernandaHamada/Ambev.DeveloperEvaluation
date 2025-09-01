@@ -25,7 +25,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(u => u.Image)
             .IsRequired()
-            .HasColumnType("bytea"); ;
+            .HasColumnType("bytea"); 
 
         builder.Property(p => p.Category)
           .IsRequired()
@@ -36,12 +36,12 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             r.Property(rate => rate.Rate)
                 .HasColumnName("Rate")
                 .IsRequired()
-                .HasMaxLength(10);
+                .HasColumnType("numeric(18,2)");
 
             r.Property(rate => rate.Count)
                 .HasColumnName("Count")
                 .IsRequired()
-                .HasMaxLength(10);
+                .HasColumnType("integer");
         });
 
         builder.Property(p => p.Status)

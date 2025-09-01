@@ -1,5 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Common.Security;
-using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -71,5 +70,12 @@ public class ProductRepository : IProductRepository
     public async Task<IEnumerable<string>> ListCategoriesAsync(CancellationToken cancellationToken = default)
     {
         return await _context.Products.Select(p => p.Category).Distinct().ToListAsync();
+    }
+
+    public async Task<IQueryable<Product>> GetAllByCategoryAsync(string category, CancellationToken cancellationToken = default)
+    {
+        var query = _context.Products.AsNoTracking().Where(p => p.Category == category);
+
+        return query;
     }
 }
