@@ -12,6 +12,6 @@ public interface IProduct
 
 public interface IProductRating
 {
-    public string Rate { get; }
-    public string Count { get; }
+    public decimal Rate { get; }
+    public int Count { get; }
 }

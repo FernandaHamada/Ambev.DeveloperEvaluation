@@ -59,6 +59,6 @@ public class Product : BaseEntity, IProduct
 [Owned]
 public class ProductRating
 {
-    public string Rate { get; set; } = string.Empty;
-    public string Count { get; set; } = string.Empty;
+    public decimal Rate { get; set; }
+    public int Count { get; set; }
 }
