@@ -2,15 +2,15 @@
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using AutoMapper;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.ListProducts;
+namespace Ambev.DeveloperEvaluation.Application.Products.GetProduct;
 
-public class ListUsersProfile : Profile
+internal class GetProductProfile : Profile
 {
-    public ListUsersProfile()
+    public GetProductProfile()
     {
         CreateMap<ProductRating, RatingResult>();
         CreateMap<Product, ProductResult>()
             .ForMember(dest => dest.Image,
-                opt => opt.MapFrom(src => src.Image != null ? Convert.ToBase64String(src.Image) : null));
+            opt => opt.MapFrom(src => src.Image != null ? Convert.ToBase64String(src.Image) : null));
     }
 }

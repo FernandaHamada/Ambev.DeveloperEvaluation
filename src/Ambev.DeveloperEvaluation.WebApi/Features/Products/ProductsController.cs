@@ -1,12 +1,13 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
 using Ambev.DeveloperEvaluation.Application.Products.ListProducts;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.ListProducts;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.Response;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
@@ -55,6 +56,24 @@ public class ProductsController : BaseController
         {
             Success = true,
             Message = "Product created successfully",
+            Data = _mapper.Map<ProductResponse>(response)
+        });
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetProduct([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var request = new GetProductRequest { Id = id };
+        var command = _mapper.Map<GetProductCommand>(request.Id);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<ProductResponse>
+        {
+            Success = true,
+            Message = "Product retrieved successfully",
             Data = _mapper.Map<ProductResponse>(response)
         });
     }
